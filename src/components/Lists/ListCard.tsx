@@ -2,13 +2,19 @@ import React, { FC } from "react";
 import { connect, ConnectedProps } from 'react-redux'; 
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 import { List } from "../../types";
-import { Card, Icon, Label, Progress, SemanticCOLORS } from "semantic-ui-react";
+import { Card, Icon, Label, Progress, SemanticCOLORS, Popup } from "semantic-ui-react";
 import { deleteList } from '../../actions/lists';
 import { compose } from "recompose";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
 const style: React.CSSProperties = {
   cursor: 'grab',
+}
+
+const popupStyles: React.CSSProperties = {
+  borderRadius: 0,
+  opacity: 0.65,
+  padding: '1em'
 }
 
 const colors: Array<SemanticCOLORS> = [
@@ -54,21 +60,30 @@ const ListCard: FC<Props> = (props) => {
       <Card.Meta>{}</Card.Meta>
       <Card.Content description={description} />
       <Card.Content >
-        <Label.Group>
-          <Label basic>
-            <Icon name='check' />
-            {`${completedCount} Completed`}
-          </Label>
-          <Label basic>
-            <Icon name='sync' />
-            {`${ongoingCount} Ongoing`}
-          </Label>
-        </Label.Group>
         <Progress percent={completedCount/(tasksCount/100)} size='tiny' color={color}/>
       </Card.Content>
-      <Label color={color} floating>
-        {tasksCount}
-      </Label>
+      <Popup
+        trigger={
+          <Label color={color} floating>
+            {tasksCount}
+          </Label>
+        }
+        content={
+          <Label.Group>
+            <Label>
+              <Icon name='check'/>
+              {`Completed ${completedCount}`}
+            </Label>
+            <Label>
+              <Icon name='sync'/>
+              {`Ongoing ${ongoingCount}`}
+            </Label>
+          </Label.Group>
+        }
+        style={popupStyles}
+        inverted
+        position='bottom right'
+      />
     </div>
   )
 }

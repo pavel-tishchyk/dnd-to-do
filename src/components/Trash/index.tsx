@@ -16,7 +16,7 @@ const Trash: React.FC = () => {
       isActive: monitor.canDrop() && monitor.isOver(),
     }),
   })
-
+  console.log(isActive)
   return (
     <div ref={drop} style={style}>
       <Card>

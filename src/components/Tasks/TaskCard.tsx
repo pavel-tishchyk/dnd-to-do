@@ -48,7 +48,7 @@ const TaskCard: FC<Props> = (props) => {
   })
 
   return (
-    <div className='ui fluid card' id={`task-${priority}-${id}`} ref={drag} style={{ ...style, opacity }}>
+    <div className='ui fluid card' ref={drag} style={{ ...style, opacity }}>
       <Card.Content header={title} />
       {/* <Card.Meta>{date}</Card.Meta> */}
       <Card.Content description={body} />
